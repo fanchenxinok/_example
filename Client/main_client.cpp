@@ -4,6 +4,7 @@
 #include <binder/IServiceManager.h>
 #include <utils/Log.h>
 #include "../Interface/IXXXXService.h"
+#include "../Interface/ICallback.h"
 
 #define LOG_NDEBUG 0 
 #define LOG_TAG "chenxf: Client-main"
@@ -11,6 +12,18 @@
 using namespace android;
 
 sp<IXXXXService> mXXXXService;
+
+class Callback: public BnCallback
+{
+	public:
+		virtual int notifyCallback(int a);
+};
+
+int Callback::notifyCallback(int a)
+{
+	ALOGD(" Callback::notifyCallback() be called, a = %d", a);
+	return 0;
+}
 
 void initXXXXServiceClient()
 { 
@@ -37,6 +50,9 @@ int main(int argc, char* argv[])
 		ALOGW("cannot find XXXXService");
 		return 0;
 	} 
+
+	sp<Callback> cb = new Callback();
+	mXXXXService->setCallback(cb);
 
 	while(1) {
 		mXXXXService->setSomething(1);

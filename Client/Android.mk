@@ -5,7 +5,8 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= \
 	main_client.cpp \
-	../Interface/IXXXXService.cpp
+	../Interface/IXXXXService.cpp \
+	../Interface/ICallback.cpp
 	
 LOCAL_SHARED_LIBRARIES := \
 	liblog libui libcutils libutils libbinder

@@ -18,12 +18,25 @@ namespace android
 	int XXXXService::setSomething(int a) {
 		ALOGD(" XXXXService::setSomething a = %d myParam %d", a, myParam);
 		myParam += a;
+		if(mCallback != NULL) {
+			ALOGD(" XXXXService::mCallback->notifyCallback()");
+			mCallback->notifyCallback(myParam);
+		}
+		else {
+			ALOGD(" XXXXService::mCallback is NULL");
+		}
 		return 0;//OK
 	} 
 
 	int XXXXService::getSomething() { 
-		ALOGD("#XXXXService::getSomething myParam = %d", myParam); 
+		ALOGD(" XXXXService::getSomething myParam = %d", myParam); 
 		return myParam; 
 	} 
+
+	int XXXXService::setCallback(const sp<ICallback>& cb) {
+		ALOGD(" XXXXService::setCallback"); 
+		mCallback = cb;
+		return 0;
+	}
 }
 

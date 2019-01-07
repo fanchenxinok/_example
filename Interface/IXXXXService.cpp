@@ -12,6 +12,7 @@ namespace android
 	enum {
 		SET_SOMETHING = IBinder::FIRST_CALL_TRANSACTION,
 		GET_SOMETHING,
+		SET_CALLBACK,
 	};
 		
 	//------------------------------------proxy side-------------------------------- 
@@ -34,6 +35,15 @@ namespace android
 				Parcel data, reply;
 				data.writeInterfaceToken(IXXXXService::getInterfaceDescriptor());
 				remote()->transact(GET_SOMETHING, data, &reply);
+				return reply.readInt32();
+			} 
+
+			virtual int setCallback(const sp<ICallback>& cb)
+			{ 
+				ALOGD(" BpXXXXService::setCallback");
+				Parcel data, reply;
+				data.writeStrongBinder(IInterface::asBinder(cb));
+				remote()->transact(SET_CALLBACK, data, &reply);
 				return reply.readInt32();
 			} 
 	}; 
@@ -60,6 +70,13 @@ namespace android
 				reply->writeInt32(getSomething());
 				return NO_ERROR;
 			} break;
+			case SET_CALLBACK:
+			{ 
+				ALOGD("BnXXXXService::onTransact  SET_CALLBACK ");
+				sp<ICallback> cb = interface_cast<ICallback>(data.readStrongBinder());
+				reply->writeInt32(setCallback(cb));
+				return NO_ERROR;
+			} break; 
 		} 
 		return BBinder::onTransact(code, data, reply, flags);
 	} 

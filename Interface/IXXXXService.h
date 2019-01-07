@@ -2,6 +2,7 @@
 #define IXXXXService_H
 
 #include <binder/IInterface.h>
+#include "ICallback.h"
 
 namespace android 
 { 
@@ -13,6 +14,7 @@ namespace android
 			//TODO: define what you want to do
 			virtual int setSomething(int a) = 0;
 			virtual int getSomething() = 0;
+			virtual int setCallback(const sp<ICallback>& cb) = 0;
 	}; 
 	
 	class BnXXXXService : public BnInterface<IXXXXService>
