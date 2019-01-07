@@ -1,5 +1,9 @@
 #include <stdio.h>
-#include "../interface/IXXXXService.h"
+#include <binder/IPCThreadState.h>
+#include <binder/ProcessState.h>
+#include <binder/IServiceManager.h>
+#include <utils/Log.h>
+#include "../Interface/IXXXXService.h"
 
 #define LOG_NDEBUG 0 
 #define LOG_TAG "chenxf: Client-main"
