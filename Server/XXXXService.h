@@ -1,5 +1,6 @@
-#include "../Interface/IXXXXService.h"
 #include <binder/BinderService.h>
+#include "../Interface/IXXXXService.h"
+#include "../Interface/ICallback.h"
 
 namespace android
 { 
@@ -10,8 +11,10 @@ namespace android
 			static const char* getServiceName() { return "XXXXService"; }  //will be the service name
 			virtual int setSomething(int a);
 			virtual int getSomething();
+			virtual int setCallback(const sp<ICallback>& cb);
 		protected:
 			int myParam;
+			sp<ICallback> mCallback;
 	}; 
 	
 }
